@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Assistant</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+<div class="outercontainer">
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">🛍️ Laptop Shop Assist</h1>
+    </header>
+
+    <!-- Chat Container -->
+    <main class="conversationcontainer" id="chatcontainer">
+        {% if name_xyz %}
+        {% for entry in name_xyz %}
+        <div class="{{ 'bot' if entry.bot else 'user' }}">
+            {{ entry.bot or entry.user }}
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="bot">Hi there! 👋 What would you like help with today?</div>
+        {% endif %}
+    </main>
+
+    <!-- Input Container -->
+    <div class="inputcontainer">
+        <!-- Chat Input Form -->
+        <form action="/conversation" method="POST" class="inputform">
+            <input
+                    type="text"
+                    name="user_input_message"
+                    class="inputtextbox"
+                    placeholder="Type your message here..."
+                    autocomplete="off"
+                    aria-label="Message input"
+                    required
+            />
+            <button type="submit" class="submitbutton" aria-label="Send message"></button>
+        </form>
+
+        <!-- End Chat Button -->
+        <form action="/end_conversation" method="POST" class="endform">
+            <button type="submit" class="endbutton">End Chat</button>
+        </form>
+    </div>
+</div>
+
+<!-- Scroll to bottom on load -->
+<script>
+    function scrollToBottom() {
+        const chatContainer = document.getElementById('chatcontainer');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    window.onload = scrollToBottom;
+</script>
+</body>
+</html>
